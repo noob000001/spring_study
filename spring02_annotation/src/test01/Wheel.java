@@ -8,6 +8,7 @@ public class Wheel {
 	
 	public Wheel() {
 		System.out.println("기본생성자 호출");
+		System.out.println(System.identityHashCode(this));
 	}
 
 	@Override
@@ -26,6 +27,7 @@ public class Wheel {
 
 	public Wheel(int radius) {
 		super();
+		System.out.println(System.identityHashCode(this));
 		this.radius = radius;
 	}
 	

@@ -9,8 +9,8 @@
 		<property name="radius" value="20"/>
 	
 	</bean>
-	<bean id="wheelBean2" class="test01.Wheel">
-		<property name="radius" value="20"/>
+	<bean id="wheel2" class="test01.Wheel">
+		<property name="radius" value="100"/>
 	
 	</bean>
 	<context:component-scan base-package="test01"/>
