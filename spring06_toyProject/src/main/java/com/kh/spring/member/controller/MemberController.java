@@ -84,7 +84,7 @@ public class MemberController {
 	
 	@GetMapping("join")
 	public void joinForm(Model model) {
-		model.addAttribute(new JoinForm());
+		model.addAttribute(new JoinForm()).addAttribute("error",new ValidateResult());
 	}
 	
 	@PostMapping("join")
