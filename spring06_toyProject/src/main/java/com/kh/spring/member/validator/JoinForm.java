@@ -5,7 +5,7 @@ public class JoinForm {
 	private String userId;
 	private String password;
 	private String tell;
-	private String emal;
+	private String email;
 	
 	public String getUserId() {
 		return userId;
@@ -25,15 +25,15 @@ public class JoinForm {
 	public void setTell(String tell) {
 		this.tell = tell;
 	}
-	public String getEmal() {
-		return emal;
+	public String getEmail() {
+		return email;
 	}
-	public void setEmal(String emal) {
-		this.emal = emal;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	@Override
 	public String toString() {
-		return "JoinForm [userId=" + userId + ", password=" + password + ", tell=" + tell + ", emal=" + emal + "]";
+		return "JoinForm [userId=" + userId + ", password=" + password + ", tell=" + tell + ", email=" + email + "]";
 	}
 	
 	

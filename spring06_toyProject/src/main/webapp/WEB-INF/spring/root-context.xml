@@ -20,6 +20,24 @@
 	  <constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
+	<!-- 메일 발송을 위해 추가해야 하는 bean : JavaMailSenderImpl -->
+	<bean id="javaMailSenderImp"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="username" value="pclassgyu@gmail.com"/>
+		<property name="password" value="1q2w3e4r1!"/>
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable"> true</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
 	<mybatis-spring:scan base-package="com.kh.spring" annotation="org.apache.ibatis.annotations.Mapper"/>
 	
 		
