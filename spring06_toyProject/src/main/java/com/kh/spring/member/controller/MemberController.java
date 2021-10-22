@@ -1,6 +1,7 @@
 package com.kh.spring.member.controller;
 
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,9 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.CookieGenerator;
 
-import com.kh.spring.common.mybatis.validator.ValidateResult;
+import com.kh.spring.common.code.ErrorCode;
+import com.kh.spring.common.exception.HandlableException;
+import com.kh.spring.common.validator.ValidateResult;
 import com.kh.spring.member.model.dto.Member;
 import com.kh.spring.member.model.service.MemberService;
 import com.kh.spring.member.validator.JoinForm;
@@ -84,13 +88,15 @@ public class MemberController {
 	
 	@GetMapping("join")
 	public void joinForm(Model model) {
-		model.addAttribute(new JoinForm()).addAttribute("error",new ValidateResult());
+		model.addAttribute(new JoinForm()).addAttribute("error",new ValidateResult().getError());
 	}
 	
 	@PostMapping("join")
 	public String join(@Validated JoinForm form
 			, Errors errors //반드시 검증될 객체 뒤에 작성
 			, Model model
+			, HttpSession session
+			, RedirectAttributes redirectAttr
 		) {
 		
 		ValidateResult vr = new ValidateResult();
@@ -101,9 +107,36 @@ public class MemberController {
 			return "member/join";
 		}
 		
-		memberService.insertMember(form);
-		return "index";
+		//token 생성
+		String token = UUID.randomUUID().toString();
+		session.setAttribute("persistUser", form);
+		session.setAttribute("persistToken", token);
+		
+		memberService.authenticateByEmail(form,token);
+		
+		redirectAttr.addFlashAttribute("message","이메일이 발송되었습니다.");
+		
+		return "redirect:/";
 	}
+	
+	@GetMapping("join-impl/{token}")
+	public String joinImpl(@PathVariable String token
+			, @SessionAttribute(value = "persistToken", required = false) String persistToken
+			, @SessionAttribute(value = "persistUser", required = false) JoinForm form
+			, HttpSession session
+			, RedirectAttributes redirectAttrs) {
+		
+		if(!token.equals(persistToken)) {
+			throw new HandlableException(ErrorCode.AUTHENTICATION_FAILED_ERROR);
+		}
+		
+		memberService.insertMember(form);
+		redirectAttrs.addFlashAttribute("message","회원가입을 환영합니다. 로그인해주세요");
+		session.removeAttribute("persistToken");
+		session.removeAttribute("persistUser");
+		return "redirect:/member/login";
+	}
+	
 	
 	@PostMapping("join-json")
 	public String joinWithJson(@RequestBody Member member) {

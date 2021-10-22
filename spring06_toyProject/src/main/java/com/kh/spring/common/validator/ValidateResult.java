@@ -1,4 +1,4 @@
-package com.kh.spring.common.mybatis.validator;
+package com.kh.spring.common.validator;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -15,6 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,10 +54,10 @@ public class MemberControllerTest {
 	@Test
 	public void joinTest() throws Exception {
 		mockMvc.perform(post("/member/join")
-				.param("userId", "testMethod")
-				.param("password", "1234")
-				.param("tell", "010-2222-3333")
-				.param("email", "aaa@bbb.com"))
+				.param("userId", "testAAA")
+				.param("password", "123qwe!@!")
+				.param("tell", "01022223333")
+				.param("email", "pclassgyu@gmail.com"))
 		.andExpect(status().isOk())
 		.andDo(print());
 	}

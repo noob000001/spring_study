@@ -32,9 +32,10 @@ public class JoinFormValidator implements Validator{
 			errors.rejectValue("userId", "error-userId","ÀÌ¹Ì Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
 		}
 		//2. ºñ¹Ğ¹øÈ£°¡ 8±ÛÀÚ ÀÌ»ó, ¼ıÀÚ ¿µ¹®ÀÚ Æ¯¼ö¹®ÀÚ Á¶ÇÕÀÎÁö È®ÀÎ
-		boolean valid = Pattern.matches("(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z¤¡-ÆR0-9]){8,}", form.getPassword());
+		boolean valid = Pattern.matches("(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z¤¡-ÆR0-9]).{8,}", form.getPassword());
 		if(!valid) {
 			errors.rejectValue("password", "error-password", "ºñ¹Ğ¹øÈ£´Â 8±ÛÀÚ ÀÌ»óÀÇ ¼ıÀÚ ¿µ¹®ÀÚ Æ¯¼ö¹®ÀÚ Á¶ÇÕ ÀÔ´Ï´Ù.");
+			System.out.println(form.getPassword());
 		}
 		//3. ÀÌ¸ŞÀÏ Á¸Àç À¯¹«
 		valid=Pattern.matches("^\\d{9,11}$", form.getTell());
