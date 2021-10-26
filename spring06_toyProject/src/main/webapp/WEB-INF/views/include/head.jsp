@@ -7,5 +7,6 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/all.css">
 <script type="text/javascript" src="${contextPath}/resources/js/webUtil.js"></script>
+<script type="text/javascript" src="${contextPath}/resources/js/urlEncoder.js"></script>
 <title>JSP-Study</title>
     
