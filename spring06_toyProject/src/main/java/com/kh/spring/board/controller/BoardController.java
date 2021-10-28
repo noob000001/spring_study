@@ -1,7 +1,5 @@
 package com.kh.spring.board.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -18,9 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.board.model.dto.Board;
 import com.kh.spring.board.model.service.BoardService;
-import com.kh.spring.board.model.service.BoardServiceImpl;
-import com.kh.spring.common.code.Config;
-import com.kh.spring.common.util.file.FileUtil;
 import com.kh.spring.member.model.dto.Member;
 
 import lombok.RequiredArgsConstructor;
@@ -29,35 +24,49 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("board")
 public class BoardController {
-   
-   Logger logger = LoggerFactory.getLogger(this.getClass());
-   private final BoardService boardService;
-   
-   @GetMapping("board-form")
-   public void boardForm() {};
-   
-   @PostMapping("upload")
-   public String uploadBoard(
-            @RequestParam List<MultipartFile> files
-            ,@SessionAttribute("authentication") Member member
-            , Board board
-               
-         ) {
-	   
-	   logger.debug("filesSize : " + files.size());
-	   logger.debug("files.0" + files.get(0));
-	   logger.debug("mf.isEmpty : " + files.get(0).isEmpty());
-	   
-      board.setUserId(member.getUserId());
-      boardService.insertBoard(files, board);
-      return "redirect:/";
-   }
-   
-   @GetMapping("board-detail")
-   public void boardDetail(Model model, String bdIdx) {
-	   Map<String, Object> commandMap = boardService.selectBoardByIdx(bdIdx);
-	   model.addAllAttributes(commandMap);
-	   
-   }
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final BoardService boardService;
+	
+	@GetMapping("board-form")
+	public void boardForm() {};
+	
+	@PostMapping("upload")
+	public String uploadBoard(
+				@RequestParam List<MultipartFile> files
+				,@SessionAttribute("authentication") Member member
+				, Board board
+					
+			) {
+		
+		
+		logger.debug("filesSize : " + files.size());
+		logger.debug("files.0" + files.get(0));
+		logger.debug("mf.isEmpty : " + files.get(0).isEmpty());
+		
+		board.setUserId(member.getUserId());
+		boardService.insertBoard(files, board);
+		return "redirect:/";
+	}
+	
+	@GetMapping("board-detail")
+	public void boardDetail(Model model, String bdIdx) {
+		Map<String,Object> commandMap = boardService.selectBoardByIdx(bdIdx);
+		model.addAllAttributes(commandMap);
+	}
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

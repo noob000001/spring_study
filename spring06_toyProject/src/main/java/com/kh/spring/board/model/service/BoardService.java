@@ -8,7 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.spring.board.model.dto.Board;
 
 public interface BoardService {
-	void insertBoard(List<MultipartFile> Multiparts, Board board);
+
+	void insertBoard(List<MultipartFile> multiparts, Board board);
 
 	Map<String, Object> selectBoardByIdx(String bdIdx);
+	
 }

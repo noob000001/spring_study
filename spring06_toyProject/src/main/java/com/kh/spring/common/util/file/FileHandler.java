@@ -22,6 +22,8 @@ public class FileHandler {
 		
 		UrlResource resource = new UrlResource(new URI(file.getLink()));
 		
+		System.out.println(file.getLink());
+		
 		ResponseEntity<UrlResource> response = 
 				ResponseEntity.ok()
 				.header("Content-Disposition", "attachment; filename="+URLEncoder.encode(file.getOriginFileName(), "UTF-8"))
